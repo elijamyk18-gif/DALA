@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DALA</title>
+    <!--
+      GitHub Pages doesn't support real server-side routing for single-page apps.
+      When someone visits a route like dala.home.kg/dashboard directly (or refreshes),
+      GitHub Pages serves this 404.html file. This script saves the intended URL and
+      redirects to the app's root, where index.html's script restores the real URL
+      and React Router takes over from there.
+      Technique based on https://github.com/rafgraph/spa-github-pages
+    -->
+    <script>
+      sessionStorage.redirect = location.href;
+    </script>
+    <meta http-equiv="refresh" content="0; url=/" />
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
