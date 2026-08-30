@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { useSEO } from '@/hooks/useSEO';
 import { Heart, ArrowRight, Check, Sparkles, Users, Target } from 'lucide-react';
-
-const SITE_TITLE = 'DALA – Connect, Match & Find Community | dala.home.kg';
-const SITE_DESC = 'DALA is a community platform for connecting, matching, and building meaningful relationships.';
 
 const steps = [
   {
@@ -48,19 +45,11 @@ const itemVariants = {
 } as const;
 
 export function About() {
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = 'About DALA | Connect, Match & Find Community';
-
-    const meta = document.querySelector('meta[name="description"]');
-    const prevContent = meta?.getAttribute('content') ?? SITE_DESC;
-    if (meta) meta.setAttribute('content', 'Learn how DALA helps you connect, match, and build meaningful relationships through events and community.');
-
-    return () => {
-      document.title = prevTitle;
-      if (meta) meta.setAttribute('content', prevContent);
-    };
-  }, []);
+  useSEO({
+    title: 'About DALA | Connect, Match & Find Community',
+    description: 'Learn how DALA helps you connect, match, and build meaningful relationships through events and community.',
+    canonicalPath: '/about',
+  });
 
   return (
     <div className="min-h-screen">
