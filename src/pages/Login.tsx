@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import { useSEO } from '@/hooks/useSEO';
 import { Heart, Eye, EyeOff, Mail, Lock, ArrowRight, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
@@ -8,6 +9,11 @@ import { toast } from 'sonner';
 type AuthMode = 'signin' | 'signup' | 'verify' | 'forgot' | 'reset';
 
 export function Login() {
+  useSEO({
+    title: 'Sign In or Create an Account | DALA',
+    description: 'Sign in to DALA or create a free account to start connecting, matching, and building meaningful relationships in your community.',
+    canonicalPath: '/login',
+  });
   const [mode, setMode] = useState<AuthMode>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
