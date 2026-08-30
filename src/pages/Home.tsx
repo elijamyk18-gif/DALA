@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useSEO } from '@/hooks/useSEO';
 import { 
   Heart, 
   Users, 
@@ -25,6 +26,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getProfilePhoto } from '@/lib/utils';
 
 export function Home() {
+  useSEO({
+    title: 'DALA – Connect, Match & Find Community | dala.home.kg',
+    description: 'DALA is a community platform to connect, match, and build meaningful relationships. Join events, meet new people, and find your home away from home.',
+    canonicalPath: '/',
+  });
   const [featuredProfiles, setFeaturedProfiles] = useState<UserProfile[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [announcements, setAnnouncements] = useState<any[]>([]);
