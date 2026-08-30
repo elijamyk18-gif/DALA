@@ -23,6 +23,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { AnnouncementManager } from '@/components/admin/AnnouncementManager';
 import { SurveyManager } from '@/components/admin/SurveyManager';
 import { UserManagement } from '@/components/admin/UserManagement';
+import { EmailManager } from '@/components/admin/EmailManager';
 import { getProfilePhoto } from '@/lib/utils';
 
 interface Stats {
@@ -238,6 +239,7 @@ export function AdminDashboard() {
               )}
             </TabsTrigger>
             <TabsTrigger value="information" className="rounded-xl px-4 md:px-6 font-bold h-full">Broadcasts</TabsTrigger>
+            <TabsTrigger value="emails" className="rounded-xl px-4 md:px-6 font-bold h-full">Emails</TabsTrigger>
             <TabsTrigger value="surveys" className="rounded-xl px-4 md:px-6 font-bold h-full">Engagement</TabsTrigger>
           </TabsList>
         </div>
@@ -393,6 +395,10 @@ export function AdminDashboard() {
             onRefresh={fetchAnnouncements} 
             adminId={currentAdmin?.id} 
           />
+        </TabsContent>
+
+        <TabsContent value="emails" className="space-y-6">
+          <EmailManager />
         </TabsContent>
 
         <TabsContent value="surveys" className="space-y-6">
