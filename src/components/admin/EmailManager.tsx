@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { Mail, Send, Sparkles, Crown, Info, Megaphone, Loader2 } from 'lucide-react';
+import { Mail, Send, Sparkles, Crown, Info, Megaphone, Loader2, ImagePlus } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-type Audience = 'all' | 'premium' | 'non_premium' | 'test';
+type Audience = 'all' | 'premium' | 'non_premium' | 'no_profile_photo' | 'test';
 
 const PRESETS: Record<string, { label: string; icon: any; subject: string; body: string }> = {
   promotion: {
@@ -40,6 +40,12 @@ const PRESETS: Record<string, { label: string; icon: any; subject: string; body:
     icon: Megaphone,
     subject: 'DALA Announcement',
     body: 'Hi there,\n\n[Write your announcement here]\n\nThanks,\nThe DALA Team',
+  },
+  complete_profile: {
+    label: 'Complete Profile',
+    icon: ImagePlus,
+    subject: 'Add a profile picture and finish your DALA profile 📸',
+    body: "Hi there,\n\nWe noticed your DALA profile doesn't have a picture yet! Profiles with a photo get far more views and connections in the community.\n\nTake a minute to:\n- Upload a clear profile picture\n- Double-check your bio and interests are up to date\n- Fill in anything you may have skipped during onboarding\n\nA complete profile helps you get noticed and makes it easier for others to connect with you.\n\nSee you on DALA!",
   },
 };
 
@@ -158,6 +164,7 @@ export function EmailManager() {
                 <SelectItem value="all">All Users</SelectItem>
                 <SelectItem value="premium">Premium Users Only</SelectItem>
                 <SelectItem value="non_premium">Non-Premium Users Only</SelectItem>
+                <SelectItem value="no_profile_photo">Users Without Profile Pictures</SelectItem>
                 <SelectItem value="test">Just a Test Email (to myself)</SelectItem>
               </SelectContent>
             </Select>
