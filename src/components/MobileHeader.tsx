@@ -3,6 +3,7 @@ import { ArrowLeft, Bell, Search, Crown, Menu, LogOut, ShieldCheck, ArrowLeftRig
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserAvatar } from '@/components/UserAvatar';
+import logoImg from '@/assets/favicon.png';
 import {
   Sheet,
   SheetTrigger,
@@ -57,6 +58,9 @@ export function MobileHeader() {
             <ArrowLeft className="h-5 w-5" />
           </button>
         ) : null}
+        {location.pathname === '/' && (
+          <img src={logoImg} alt="Dala logo" className="h-7 w-7 rounded-lg shrink-0" />
+        )}
         <motion.h1
           key={title}
           initial={{ opacity: 0, y: -4 }}
