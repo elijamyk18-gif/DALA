@@ -8,6 +8,20 @@ import { toast } from 'sonner';
 
 type AuthMode = 'signin' | 'signup' | 'verify' | 'forgot' | 'reset';
 
+// Supabase (and network) errors can arrive in several shapes depending on
+// what failed. This pulls out a human-readable message from whichever
+// shape we get, instead of ever showing a raw object like "{}".
+function getErrorMessage(err: unknown, fallback: string): string {
+  if (!err) return fallback;
+  if (typeof err === 'string') return err;
+  const e = err as { message?: string; error_description?: string; msg?: string; error?: string };
+  const msg = e.message || e.error_description || e.msg || e.error;
+  if (msg && typeof msg === 'string' && msg.trim() && msg.trim() !== '{}') {
+    return msg;
+  }
+  return fallback;
+}
+
 export function Login() {
   useSEO({
     title: 'Sign In or Create an Account | DALA',
@@ -23,12 +37,10 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const goAfterLogin = (loggedInEmail: string) => {
-    if (loggedInEmail === 'ofodo19@gmail.com') {
-      navigate('/admin');
-    } else {
-      navigate('/onboarding');
-    }
+  const goAfterLogin = () => {
+    // Everyone lands on the main site after signing in - admins included.
+    // Admins can switch into the Admin Dashboard from the menu when they want it.
+    navigate('/onboarding');
   };
 
   const handleAuth = async (e: React.FormEvent) => {
@@ -50,10 +62,11 @@ export function Login() {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast.success('Welcome back!');
-        goAfterLogin(email);
+        goAfterLogin();
       }
     } catch (err: any) {
-      toast.error(err.message || 'Authentication error');
+      console.error(err);
+      toast.error(getErrorMessage(err, 'Authentication error'));
     } finally {
       setLoading(false);
     }
@@ -74,9 +87,10 @@ export function Login() {
       });
       if (error) throw error;
       toast.success('Email confirmed! Welcome to DALA.');
-      goAfterLogin(email);
+      goAfterLogin();
     } catch (err: any) {
-      toast.error(err.message || 'Invalid or expired code');
+      console.error(err);
+      toast.error(getErrorMessage(err, 'Invalid or expired code'));
     } finally {
       setLoading(false);
     }
@@ -90,7 +104,8 @@ export function Login() {
       if (error) throw error;
       toast.success('New code sent!');
     } catch (err: any) {
-      toast.error(err.message || 'Could not resend code');
+      console.error(err);
+      toast.error(getErrorMessage(err, 'Could not resend code'));
     } finally {
       setLoading(false);
     }
@@ -111,7 +126,8 @@ export function Login() {
       setNewPassword('');
       setMode('reset');
     } catch (err: any) {
-      toast.error(err.message || 'Could not send reset code');
+      console.error(err);
+      toast.error(getErrorMessage(err, 'Could not send reset code'));
     } finally {
       setLoading(false);
     }
@@ -147,7 +163,8 @@ export function Login() {
       setCode('');
       setMode('signin');
     } catch (err: any) {
-      toast.error(err.message || 'Invalid or expired code');
+      console.error(err);
+      toast.error(getErrorMessage(err, 'Invalid or expired code'));
     } finally {
       setLoading(false);
     }
