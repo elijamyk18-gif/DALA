@@ -31,7 +31,7 @@ export function MobileHeader() {
   const navigate = useNavigate();
   const { session, user, profile, signOut } = useAuth();
 
-  const isAdmin = profile?.role === 'admin' || user?.email === 'ofodo19@gmail.com';
+  const isAdmin = profile?.role === 'admin';
   const onAdminPage = location.pathname.startsWith('/admin');
 
   const title = Object.entries(pageTitles).find(([path]) =>
@@ -101,7 +101,7 @@ export function MobileHeader() {
                 <Menu className="h-5 w-5" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[280px] p-6">
+            <SheetContent side="right" className="w-[280px] p-6 bg-white opacity-100 shadow-2xl">
               <SheetHeader className="mb-6 text-left">
                 <SheetTitle className="flex items-center gap-3">
                   <UserAvatar profile={profile} className="h-10 w-10" />
