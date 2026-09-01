@@ -133,9 +133,7 @@ export function Terms() {
       </Section>
 
       <p className="text-xs text-slate-400 pt-4 border-t border-slate-100">
-        This document is a general template and does not constitute legal advice. We recommend
-        having it reviewed by a qualified lawyer familiar with the laws that apply to your
-        specific situation and jurisdiction before relying on it.
+
       </p>
     </LegalPageLayout>
   );
