@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useSEO } from '@/hooks/useSEO';
 import { Heart, Eye, EyeOff, Mail, Lock, ArrowRight, ShieldCheck, ArrowLeft } from 'lucide-react';
@@ -369,9 +369,9 @@ export function Login() {
               <div className="px-1 pt-1 text-center">
                 <p className="text-xs text-slate-400">
                   By continuing, you agree to our{' '}
-                  <button type="button" className="text-orange-500 font-semibold underline underline-offset-2">Terms</button>
+                  <Link to="/terms" className="text-orange-500 font-semibold underline underline-offset-2">Terms</Link>
                   {' '}and{' '}
-                  <button type="button" className="text-orange-500 font-semibold underline underline-offset-2">Privacy Policy</button>
+                  <Link to="/privacy" className="text-orange-500 font-semibold underline underline-offset-2">Privacy Policy</Link>
                 </p>
               </div>
             </form>
