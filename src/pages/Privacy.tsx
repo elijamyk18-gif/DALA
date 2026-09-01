@@ -95,10 +95,7 @@ export function Privacy() {
       </Section>
 
       <p className="text-xs text-slate-400 pt-4 border-t border-slate-100">
-        This document is a general template and does not constitute legal advice. Depending on
-        where your users are located (for example, the EU or California), additional privacy
-        laws like GDPR or CCPA may apply to you. We recommend having this policy reviewed by a
-        qualified lawyer before relying on it.
+
       </p>
     </LegalPageLayout>
   );
