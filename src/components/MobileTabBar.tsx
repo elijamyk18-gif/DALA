@@ -2,17 +2,19 @@ import { Link, useLocation } from 'react-router-dom';
 import { House, Compass, CalendarDays, MessageCircle, CircleUser } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-
-const tabs = [
-  { href: '/', label: 'Home', icon: House },
-  { href: '/discover', label: 'Discover', icon: Compass },
-  { href: '/events', label: 'Events', icon: CalendarDays },
-  { href: '/messages', label: 'Messages', icon: MessageCircle },
-  { href: '/profile', label: 'Profile', icon: CircleUser },
-];
+import { useAuth } from '@/contexts/AuthContext';
 
 export function MobileTabBar() {
   const location = useLocation();
+  const { user } = useAuth();
+
+  const tabs = [
+    { href: '/', label: 'Home', icon: House },
+    { href: '/discover', label: 'Discover', icon: Compass },
+    { href: '/events', label: 'Events', icon: CalendarDays },
+    { href: '/messages', label: 'Messages', icon: MessageCircle },
+    { href: user ? `/profile/${user.id}` : '/login', label: 'Profile', icon: CircleUser },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around pb-safe bg-white/80 backdrop-blur-xl border-t border-slate-200/60 md:hidden shadow-2xl"
