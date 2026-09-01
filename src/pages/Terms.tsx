@@ -131,10 +131,6 @@ export function Terms() {
           </a>.
         </p>
       </Section>
-
-      <p className="text-xs text-slate-400 pt-4 border-t border-slate-100">
-
-      </p>
     </LegalPageLayout>
   );
 }
