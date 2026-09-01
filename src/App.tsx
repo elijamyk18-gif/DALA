@@ -10,6 +10,10 @@ import './App.css';
 // Route-level code splitting: these pages load on demand instead of being
 // bundled into the initial page load, keeping the first paint fast.
 const About = lazy(() => import('./pages/About').then((m) => ({ default: m.About })));
+const Terms = lazy(() => import('./pages/Terms').then((m) => ({ default: m.Terms })));
+const Privacy = lazy(() => import('./pages/Privacy').then((m) => ({ default: m.Privacy })));
+const FAQ = lazy(() => import('./pages/FAQ').then((m) => ({ default: m.FAQ })));
+const Safety = lazy(() => import('./pages/Safety').then((m) => ({ default: m.Safety })));
 const Login = lazy(() => import('./pages/Login').then((m) => ({ default: m.Login })));
 const Discover = lazy(() => import('./pages/Discover').then((m) => ({ default: m.Discover })));
 const ProfileDetail = lazy(() => import('./pages/ProfileDetail').then((m) => ({ default: m.ProfileDetail })));
@@ -59,6 +63,10 @@ function AppContent() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="faq" element={<FAQ />} />
+            <Route path="safety" element={<Safety />} />
             <Route path="login" element={<Login />} />
             <Route path="discover" element={<ProtectedRoute><Discover /></ProtectedRoute>} />
             <Route path="profile/:id" element={<ProtectedRoute><ProfileDetail /></ProtectedRoute>} />
