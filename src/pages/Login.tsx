@@ -38,8 +38,9 @@ export function Login() {
   const navigate = useNavigate();
 
   const goAfterLogin = () => {
-    // Everyone lands on the main site after signing in - admins included.
-    // Admins can switch into the Admin Dashboard from the menu when they want it.
+    // Always send people to /onboarding - Onboarding.tsx itself checks
+    // whether they already have a completed profile and instantly bounces
+    // returning users to the main site, while new users see the form.
     navigate('/onboarding');
   };
 
