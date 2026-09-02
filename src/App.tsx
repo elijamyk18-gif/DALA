@@ -1,5 +1,5 @@
-import { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Suspense, lazy, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -15,6 +15,7 @@ const Privacy = lazy(() => import('./pages/Privacy').then((m) => ({ default: m.P
 const FAQ = lazy(() => import('./pages/FAQ').then((m) => ({ default: m.FAQ })));
 const Safety = lazy(() => import('./pages/Safety').then((m) => ({ default: m.Safety })));
 const Login = lazy(() => import('./pages/Login').then((m) => ({ default: m.Login })));
+const ResetPasswordConfirm = lazy(() => import('./pages/ResetPasswordConfirm').then((m) => ({ default: m.ResetPasswordConfirm })));
 const Discover = lazy(() => import('./pages/Discover').then((m) => ({ default: m.Discover })));
 const ProfileDetail = lazy(() => import('./pages/ProfileDetail').then((m) => ({ default: m.ProfileDetail })));
 const Onboarding = lazy(() => import('./pages/Onboarding').then((m) => ({ default: m.Onboarding })));
@@ -55,6 +56,16 @@ function PageLoadingFallback() {
 
 function AppContent() {
   useMobileRedirect();
+  const { passwordRecovery } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (passwordRecovery && location.pathname !== '/reset-password') {
+      navigate('/reset-password');
+    }
+  }, [passwordRecovery, location.pathname, navigate]);
+
   return (
     <>
       <Toaster position="top-center" richColors />
@@ -68,6 +79,7 @@ function AppContent() {
             <Route path="faq" element={<FAQ />} />
             <Route path="safety" element={<Safety />} />
             <Route path="login" element={<Login />} />
+            <Route path="reset-password" element={<ProtectedRoute><ResetPasswordConfirm /></ProtectedRoute>} />
             <Route path="discover" element={<ProtectedRoute><Discover /></ProtectedRoute>} />
             <Route path="profile/:id" element={<ProtectedRoute><ProfileDetail /></ProtectedRoute>} />
             <Route path="onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
