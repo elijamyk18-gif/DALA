@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
 export function Onboarding() {
-  const { user, profile: existingProfile, refreshProfile } = useAuth();
+  const { user, profile: existingProfile, loading: authLoading, refreshProfile } = useAuth();
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,6 +37,18 @@ export function Onboarding() {
   });
 
   useEffect(() => {
+    // Auth state is still resolving - wait before deciding anything, so we
+    // don't briefly flash the onboarding form for a returning user.
+    if (authLoading) return;
+
+    if (existingProfile?.display_name) {
+      // This person already completed onboarding before (e.g. they're just
+      // logging back in) - send them straight to the main site instead of
+      // making them fill out their profile again.
+      navigate('/', { replace: true });
+      return;
+    }
+
     if (existingProfile) {
       setFormData({
         name: existingProfile.display_name || existingProfile.full_name || '',
@@ -57,7 +69,7 @@ export function Onboarding() {
       });
     }
     setLoading(false);
-  }, [existingProfile]);
+  }, [existingProfile, authLoading, navigate]);
 
   const nextStep = () => setStep((s) => s + 1);
   const prevStep = () => setStep((s) => s - 1);
